@@ -29,6 +29,7 @@ namespace Mango.Services.AuthAPI.Service
             {
                 return new LoginResponseDto() {User=null,Token=""};
             }
+            // if user was found generate jwt token
 
             UserDto userDTO = new()
             {
