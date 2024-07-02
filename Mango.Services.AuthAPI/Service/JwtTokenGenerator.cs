@@ -1,5 +1,6 @@
 ﻿using Mango.Services.AuthAPI.Models;
 using Mango.Services.AuthAPI.Service.IService;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,9 +11,16 @@ namespace Mango.Services.AuthAPI.Service
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
         private readonly JwtOptions _jwtOptions;
-        public JwtTokenGenerator(JwtOptions jwtOptions) 
+        public JwtTokenGenerator(IOptions<JwtOptions> jwtOptions) 
         { 
-            _jwtOptions = jwtOptions;
+            _jwtOptions = jwtOptions.Value;
+
+            // Validate the key size
+            var keyBytes = Encoding.ASCII.GetBytes(_jwtOptions.Secret);
+            if (keyBytes.Length < 16) // 16 bytes = 128 bits
+            {
+                throw new ArgumentOutOfRangeException("The key size must be at least 128 bits (16 bytes).");
+            }
         }
         public string GenerateToken(ApplicationUser applicationUser)
         {
