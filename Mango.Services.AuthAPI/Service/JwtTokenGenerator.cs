@@ -14,13 +14,6 @@ namespace Mango.Services.AuthAPI.Service
         public JwtTokenGenerator(IOptions<JwtOptions> jwtOptions) 
         { 
             _jwtOptions = jwtOptions.Value;
-
-            // Validate the key size
-            var keyBytes = Encoding.ASCII.GetBytes(_jwtOptions.Secret);
-            if (keyBytes.Length < 16) // 16 bytes = 128 bits
-            {
-                throw new ArgumentOutOfRangeException("The key size must be at least 128 bits (16 bytes).");
-            }
         }
         public string GenerateToken(ApplicationUser applicationUser)
         {
