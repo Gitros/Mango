@@ -95,7 +95,7 @@ namespace Mango.Web.Controllers
             ResponseDto? response = await _productService.DeleteProductAsync(productDto.ProductId);
             if (response != null && response.IsSuccess)
             {
-                TempData["success"] = "Coupon deleted successfully";
+                TempData["success"] = "Product deleted successfully";
                 return RedirectToAction(nameof(ProductIndex));
             }
             else
