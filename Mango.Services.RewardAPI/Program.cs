@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Mango.Services.RewardAPI.Data;
 using Mango.Services.EmailAPI.Services;
 using Mango.Services.RewardAPI.Messaging;
+using Mango.Services.RewardAPI.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +37,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 ApplyMigration();
 app.MapControllers();
-
+app.UseAzureServiceBusConsumer();
 app.Run();
 
 void ApplyMigration()
