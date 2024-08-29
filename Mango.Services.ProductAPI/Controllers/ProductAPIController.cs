@@ -86,8 +86,6 @@ namespace Mango.Services.ProductAPI.Controllers
 
                 _db.Products.Update(product);
                 _db.SaveChanges();
-                _response.Result = _mapper.Map<Product>(ProductDto);
-
                 _response.Result = _mapper.Map<ProductDto>(product);
             }
             catch (Exception ex)
